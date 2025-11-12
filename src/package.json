@@ -1,0 +1,10 @@
+{
+  "name": "onlinepay-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "openpgp": "^6.2.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}
