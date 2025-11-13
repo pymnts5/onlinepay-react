@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
     "target": "ESNext",
     "module": "ESNext",
     "jsx": "react-jsx", // ✅ This is the key
@@ -9,5 +12,13 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "example"]
+  "include": [
+    "src",
+    "example"
+  ],
+  "exclude": [
+    "vite.config.ts",
+    "node_modules",
+    "dist"
+  ]
 }

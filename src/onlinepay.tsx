@@ -1,8 +1,8 @@
-import React from "react";
-import { useState } from "react";
-import * as openpgp from "openpgp";
-import "./onlinepay.css";
-import "./index.css";
+import React from 'react';
+import { useState } from 'react';
+import * as openpgp from 'openpgp';
+// import "./onlinepay.css";
+import './index.css';
 
 interface OnlinePayProps {
   onSubmitPayment: (encryptedCard: string) => void;
@@ -19,12 +19,12 @@ const OnlinePay = ({ onSubmitPayment, onError, publicKey }: OnlinePayProps) => {
   const [cvvError, setCvvError] = useState(true);
   const [cvvShowError, setCvvShowError] = useState(false);
   const [formData, setFormData] = useState({
-    cardNumber: "",
-    cardNumberRaw: "",
-    expiryDateRaw: "",
-    expiryMonth: "00",
-    expiryYear: "00",
-    cvv: "",
+    cardNumber: '',
+    cardNumberRaw: '',
+    expiryDateRaw: '',
+    expiryMonth: '00',
+    expiryYear: '00',
+    cvv: '',
   });
 
   const validateForm = ({
@@ -44,35 +44,35 @@ const OnlinePay = ({ onSubmitPayment, onError, publicKey }: OnlinePayProps) => {
 
     if (cardHasError) {
       onError({
-        field: "card",
+        field: 'card',
       });
     } else {
       onError({
-        field: "",
+        field: '',
       });
     }
     if (cvvHasError) {
       onError({
-        field: "cvv",
+        field: 'cvv',
       });
     } else {
       onError({
-        field: "",
+        field: '',
       });
     }
     if (expiryHasError) {
-      if (formData.expiryDateRaw === "") {
+      if (formData.expiryDateRaw === '') {
         onError({
-          field: "expiry",
+          field: 'expiry',
         });
       } else {
         onError({
-          field: "expiry",
+          field: 'expiry',
         });
       }
     } else {
       onError({
-        field: "",
+        field: '',
       });
     }
 
@@ -85,8 +85,8 @@ const OnlinePay = ({ onSubmitPayment, onError, publicKey }: OnlinePayProps) => {
   };
 
   const handleCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/\D/g, ""); // remove non-digit characters
-    const formattedValue = rawValue.replace(/(.{4})/g, "$1 ").trim(); // insert space every 4 digits
+    const rawValue = e.target.value.replace(/\D/g, ''); // remove non-digit characters
+    const formattedValue = rawValue.replace(/(.{4})/g, '$1 ').trim(); // insert space every 4 digits
     setFormData((prev) => ({
       ...prev,
       cardNumber: formattedValue,
@@ -119,7 +119,7 @@ const OnlinePay = ({ onSubmitPayment, onError, publicKey }: OnlinePayProps) => {
   };
 
   const validateCvvNumber = (cvv: string): boolean => {
-    if (cvv && cvv !== "") {
+    if (cvv && cvv !== '') {
       const length = cvv.length;
       if (length === 3 || length === 4) {
         return false;
@@ -129,7 +129,7 @@ const OnlinePay = ({ onSubmitPayment, onError, publicKey }: OnlinePayProps) => {
   };
 
   const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
+    let value = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
 
     // Auto-insert slash after MM
     if (value.length > 2) {
@@ -143,7 +143,7 @@ const OnlinePay = ({ onSubmitPayment, onError, publicKey }: OnlinePayProps) => {
     }));
 
     // Parse MM/YY if valid
-    const [month, year] = value.split("/");
+    const [month, year] = value.split('/');
     if (
       month &&
       year &&
@@ -173,8 +173,8 @@ const OnlinePay = ({ onSubmitPayment, onError, publicKey }: OnlinePayProps) => {
       validateForm({
         cardNumber: formData.cardNumberRaw,
         cvv: formData.cvv,
-        expiryMonth: "00",
-        expiryYear: "00",
+        expiryMonth: '00',
+        expiryYear: '00',
       });
     }
   };
@@ -211,7 +211,7 @@ const OnlinePay = ({ onSubmitPayment, onError, publicKey }: OnlinePayProps) => {
       expiryMonth: formData.expiryMonth,
       expiryYear: formData.expiryYear,
       cvv: formData.cvv,
-      captureTime: new Date().toISOString().split(".")[0] + "Z",
+      captureTime: new Date().toISOString().split('.')[0] + 'Z',
     };
 
     const publicKeyString = await openpgp.readKey({
@@ -230,76 +230,76 @@ const OnlinePay = ({ onSubmitPayment, onError, publicKey }: OnlinePayProps) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md space-y-4"
+      className='max-w-md mx-auto p-6 bg-white shadow-md rounded-md space-y-4'
     >
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+      <h2 className='text-2xl font-semibold text-gray-800 mb-4'>
         Credit Card Payment
       </h2>
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label className='block text-sm font-medium text-gray-700'>
           Card Number
         </label>
         <input
-          type="text"
-          name="cardNumber"
+          type='text'
+          name='cardNumber'
           value={formData.cardNumber}
           onChange={handleCardChange}
           onBlur={() => setCardShowError(true)}
           required
           maxLength={19}
           className={`mt-1 block w-full px-3 py-2 text-gray-900 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${
-            cardError && cardShowError ? "border-red-500" : "border-gray-300"
+            cardError && cardShowError ? 'border-red-500' : 'border-gray-300'
           }`}
         />
         {cardError && cardShowError && (
-          <p className="mt-1 text-sm text-red-600">
+          <p className='mt-1 text-sm text-red-600'>
             Please enter a valid card number.
           </p>
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className='grid grid-cols-2 gap-4'>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className='block text-sm font-medium text-gray-700'>
             Expiry Date (MM/YY)
           </label>
           <input
-            type="text"
-            name="expiryDate"
+            type='text'
+            name='expiryDate'
             value={formData.expiryDateRaw}
             onChange={handleExpiryChange}
             onBlur={() => setExpiryShowError(true)}
             required
-            placeholder="MM/YY"
+            placeholder='MM/YY'
             className={`mt-1 block w-full px-3 py-2 text-gray-900 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${
               expiryError && expiryShowError
-                ? "border-red-500"
-                : "border-gray-300"
+                ? 'border-red-500'
+                : 'border-gray-300'
             }`}
           />
           {expiryError && expiryShowError && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className='mt-1 text-sm text-red-600'>
               Please enter a valid expiry date.
             </p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-500">CVV</label>
+          <label className='block text-sm font-medium text-gray-500'>CVV</label>
           <input
-            type="password"
-            name="cvv"
+            type='password'
+            name='cvv'
             value={formData.cvv}
             onChange={handleCvvChange}
             onBlur={() => setCvvShowError(true)}
             required
             maxLength={4}
             className={`mt-1 block w-full px-3 py-2 text-gray-900 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${
-              cvvError && cvvShowError ? "border-red-500" : "border-gray-300"
+              cvvError && cvvShowError ? 'border-red-500' : 'border-gray-300'
             }`}
           />
           {cvvError && cvvShowError && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className='mt-1 text-sm text-red-600'>
               Please enter a valid CVV.
             </p>
           )}
@@ -307,11 +307,11 @@ const OnlinePay = ({ onSubmitPayment, onError, publicKey }: OnlinePayProps) => {
       </div>
 
       <button
-        type="submit"
+        type='submit'
         className={`w-full py-2 px-4 rounded-md transition-colors ${
           hasError
-            ? "bg-gray-400 cursor-not-allowed"
-            : "bg-indigo-600 hover:bg-indigo-700 text-white"
+            ? 'bg-gray-400 cursor-not-allowed'
+            : 'bg-indigo-600 hover:bg-indigo-700 text-white'
         }`}
         disabled={hasError}
       >

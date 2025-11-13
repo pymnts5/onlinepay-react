@@ -1,1 +1,1 @@
-export { default as OnlinePay } from "./onlinepay";
+export { default as OnlinePay } from './onlinepay';
