@@ -9,4 +9,4 @@ interface OnlinePayProps {
 }
 declare const OnlinePay: ({ onSubmitPayment, onError, publicKey }: OnlinePayProps) => react_jsx_runtime.JSX.Element;
 
-export { OnlinePay };
+export { OnlinePay, OnlinePay as default };

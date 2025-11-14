@@ -8,8 +8,8 @@ const config = [
   {
     input: 'src/index.tsx',
     output: [
-      { file: 'dist/index.cjs.js', format: 'cjs' },
-      { file: 'dist/index.esm.js', format: 'esm' },
+      { file: 'dist/index.esm.js', format: 'esm', sourcemap: true },
+      { file: 'dist/index.cjs.js', format: 'cjs', sourcemap: true },
     ],
     plugins: [
       resolve(),
@@ -21,7 +21,7 @@ const config = [
         sourceMap: true,
       }),
     ],
-    external: ['react', 'react-dom'],
+    external: ['react', 'react-dom', 'module'],
   },
   {
     input: 'src/index.tsx',
