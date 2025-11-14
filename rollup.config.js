@@ -21,7 +21,7 @@ const config = [
         sourceMap: true,
       }),
     ],
-    external: ['react', 'react-dom', 'module'],
+    external: ['react', 'react-dom', 'module', 'openpgp'],
   },
   {
     input: 'src/index.tsx',
