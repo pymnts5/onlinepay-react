@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import postcss from 'rollup-plugin-postcss';
 import dts from 'rollup-plugin-dts';
+import copy from 'rollup-plugin-copy';
 
 const config = [
   {
@@ -18,7 +19,10 @@ const config = [
       postcss({
         extract: true,
         minimize: true,
-        sourceMap: true,
+        modules: false,
+      }),
+      copy({
+        targets: [{ src: 'src/onlinepay.css', dest: 'dist' }],
       }),
     ],
     external: ['react', 'react-dom', 'module', 'openpgp'],

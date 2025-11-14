@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
 import * as openpgp from 'openpgp';
-// import "./onlinepay.css";
 import './index.css';
 
 interface OnlinePayProps {

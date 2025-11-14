@@ -41,6 +41,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
     "rollup": "^4.53.2",
+    "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-dts": "^6.2.3",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
