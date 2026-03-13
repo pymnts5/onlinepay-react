@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "rollup -c",
-    "prepublishOnly": "npm run build",
+    "prepare": "npm run build",
     "start": "vite --config example/vite.config.ts",
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/dist",
