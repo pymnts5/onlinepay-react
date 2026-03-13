@@ -1,6 +1,6 @@
 # onlinepay-react
 
-A secure, customizable, and easy-to-use React component for accepting online payments. It handles input formatting, validation, and client-side PGP encryption.
+A secure, customizable, and easy-to-use React component for accepting online payments. It handles input formatting, validation and encryption ready for payment processing.
 
 ## Features
 
@@ -90,9 +90,9 @@ function MyCheckoutPage() {
 | Prop                | Type                                | Description                                                             | Default                 |
 | ------------------- | ----------------------------------- | ----------------------------------------------------------------------- | ----------------------- |
 | `onSubmitPayment`   | `(encryptedCard: string) => void`   | **Required.** Callback function when payment is submitted successfully. | -                       |
-| `publicKey`         | `string`                            | **Required.** Base64 encoded PGP public key for encryption.             | -                       |
+| `publicKey`         | `string`                            | **Required.** Base64 encoded public key for encryption.                 | -                       |
 | `onError`           | `(args: { field: string }) => void` | **Required.** Callback for validation errors as the user types.         | -                       |
-| `onEncryptError`    | `(error: Error) => void`            | Optional callback for errors during the PGP encryption process.         | -                       |
+| `onEncryptError`    | `(error: Error) => void`            | Optional callback for errors during the encryption process.             | -                       |
 | `onCardBrandChange` | `(brand: string) => void`           | Optional callback that fires when the card brand is detected.           | -                       |
 | `styling`           | `'tailwind' \| 'css'`               | Sets the styling mode. Use `'css'` for the default stylesheet.          | `'tailwind'`            |
 | `headingText`       | `string`                            | Text for the main heading of the form.                                  | `'Credit Card Payment'` |
