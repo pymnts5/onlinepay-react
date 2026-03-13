@@ -6,8 +6,6 @@ import jcbLogo from './assets/jcb.svg';
 import mastercardLogo from './assets/mastercard.svg';
 import visaLogo from './assets/visa.svg';
 import { defaultClasses, OnlinePayClasses, semanticClasses } from './styles';
-export { semanticClasses };
-export type { OnlinePayClasses };
 
 interface OnlinePayProps {
   onSubmitPayment: (encryptedCard: string) => void;
@@ -95,46 +93,22 @@ const OnlinePay = ({
     const cvvHasError = validateCvvNumber(cvv, brand);
     const expiryHasError = validateExpiryDate(expiryMonth, expiryYear);
 
-    if (cardHasError) {
-      onError({
-        field: 'card',
-      });
-    } else {
-      onError({
-        field: '',
-      });
-    }
-    if (cvvHasError) {
-      onError({
-        field: 'cvv',
-      });
-    } else {
-      onError({
-        field: '',
-      });
-    }
-    if (expiryHasError) {
-      if (formData.expiryDateRaw === '') {
-        onError({
-          field: 'expiry',
-        });
-      } else {
-        onError({
-          field: 'expiry',
-        });
-      }
-    } else {
-      onError({
-        field: '',
-      });
-    }
-
     setCardError(cardHasError);
     setCvvError(cvvHasError);
     setExpiryError(expiryHasError);
 
     const hasAnyError = cardHasError || cvvHasError || expiryHasError;
     setHasError(hasAnyError);
+
+    if (cardHasError) {
+      onError({ field: 'card' });
+    } else if (cvvHasError) {
+      onError({ field: 'cvv' });
+    } else if (expiryHasError) {
+      onError({ field: 'expiry' });
+    } else {
+      onError({ field: '' });
+    }
   };
 
   const handleCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -262,20 +236,20 @@ const OnlinePay = ({
   };
 
   const validateExpiryDate = (expiryMonth: string, expiryYear: string) => {
+    if (!expiryMonth || !expiryYear) {
+      return true;
+    }
     const month = parseInt(expiryMonth, 10);
     const year = parseInt(expiryYear, 10);
 
-    if (month < 1 && month > 12) {
+    if (isNaN(month) || isNaN(year) || month < 1 || month > 12) {
       return true;
     }
 
-    // Check if expiry year is less than current year
-    if (year < new Date().getFullYear()) {
-      return true;
-    }
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1; // getMonth() is 0-indexed
 
-    // Check if expiry month and year are invalid
-    if (year <= new Date().getFullYear() && month < new Date().getMonth()) {
+    if (year < currentYear || (year === currentYear && month < currentMonth)) {
       return true;
     }
     return false;

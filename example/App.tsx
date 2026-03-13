@@ -1,4 +1,4 @@
-import OnlinePay from '../src/onlinepay';
+import OnlinePay from '../src';
 // import '../src/onlinepay.css'; // Uncomment to use the default CSS file instead of Tailwind classes
 import './index.css';
 
