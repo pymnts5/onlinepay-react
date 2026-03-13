@@ -1,6 +1,6 @@
 # onlinepay-react
 
-A secure, customizable, and easy-to-use React component for accepting online payments. It handles input formatting, validation and encryption ready for payment processing.
+A secure, customisable, and easy-to-use React component for accepting online payments. It handles input formatting, validation and encryption ready for payment processing.
 
 ## Features
 
@@ -8,7 +8,7 @@ A secure, customizable, and easy-to-use React component for accepting online pay
 - **Real-time Validation**: Validates card number (Luhn check), expiry date, and CVV.
 - **Card Brand Detection**: Automatically detects and displays logos for Visa, Mastercard, American Express, JCB, and more.
 - **Client-Side Encryption**: Encrypts card details ready for payment processing.
-- **Flexible Styling**: Works with Tailwind CSS out of the box, provides a fallback CSS file, and allows for deep customization.
+- **Flexible Styling**: Works with Tailwind CSS out of the box, provides a fallback CSS file, and allows for deep customisation.
 
 ## Live Demo
 
@@ -100,9 +100,9 @@ function MyCheckoutPage() {
 | `expiryLabel`       | `string`                            | Label for the expiry date input.                                        | `'Expiry Date (MM/YY)'` |
 | `cvvLabel`          | `string`                            | Label for the CVV input.                                                | `'CVV'`                 |
 | `payButtonLabel`    | `string`                            | Text for the submit button.                                             | `'Pay Now'`             |
-| `classes`           | `OnlinePayClasses`                  | An object to override default classes for deep customization.           | `{}`                    |
+| `classes`           | `OnlinePayClasses`                  | An object to override default classes for deep customisation.           | `{}`                    |
 
-## Advanced Customization
+## Advanced Customisation
 
 You can override the classes for any part of the component by passing a `classes` object. This works for both `tailwind` and `css` styling modes.
 
