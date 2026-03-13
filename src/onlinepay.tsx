@@ -5,7 +5,11 @@ import amexLogo from './assets/amex.svg';
 import jcbLogo from './assets/jcb.svg';
 import mastercardLogo from './assets/mastercard.svg';
 import visaLogo from './assets/visa.svg';
-import { defaultClasses, OnlinePayClasses, semanticClasses } from './styles';
+import {
+  defaultClasses,
+  OnlinePayClasses,
+  semanticClasses,
+} from './onlinepay.classes';
 
 interface OnlinePayProps {
   onSubmitPayment: (encryptedCard: string) => void;

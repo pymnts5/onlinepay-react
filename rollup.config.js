@@ -1,9 +1,11 @@
 import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
+import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss';
 import dts from 'rollup-plugin-dts';
 import copy from 'rollup-plugin-copy';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 const config = [
   {
@@ -13,6 +15,8 @@ const config = [
       { file: 'dist/index.cjs.js', format: 'cjs', sourcemap: true },
     ],
     plugins: [
+      peerDepsExternal(),
+      image(),
       resolve(),
       commonjs(),
       typescript(),
@@ -25,7 +29,7 @@ const config = [
         targets: [{ src: 'src/onlinepay.css', dest: 'dist' }],
       }),
     ],
-    external: ['react', 'react-dom', 'module', 'openpgp'],
+    external: ['module', 'openpgp'],
   },
   {
     input: 'src/index.tsx',

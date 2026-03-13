@@ -1,10 +1,11 @@
 {
   "name": "onlinepay-react",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "type": "module",
   "scripts": {
     "build": "rollup -c",
+    "prepublishOnly": "npm run build",
     "start": "vite --config example/vite.config.ts",
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/dist",
@@ -21,35 +22,35 @@
     }
   },
   "homepage": "https://pymnts5.github.io/onlinepay-react",
-  "main": "dist/index.cjs.js",
+  "main": "./dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "openpgp": "^6.2.2",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "openpgp": "^6.2.2"
   },
   "peerDependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "tailwindcss": "^3.0.0"
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-image": "^3.0.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
-    "@types/node": "^20.19.25",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "eslint": "^9",
-    "eslint-config-next": "16.0.1",
+    "eslint-config-next": "^14.2.3",
     "gh-pages": "^6.3.0",
     "rollup": "^4.53.2",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-dts": "^6.2.3",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
-    "tailwind": "^4.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "tailwindcss": "^3.4.3",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3"
   }

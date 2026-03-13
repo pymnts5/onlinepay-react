@@ -1,3 +1,4 @@
 node_modules
 example/.env.local
 example/dist
+dist
