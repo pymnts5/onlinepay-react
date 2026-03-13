@@ -19,7 +19,8 @@
       "import": "./dist/index.esm.js",
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./dist/onlinepay.css": "./dist/onlinepay.css"
   },
   "homepage": "https://pymnts5.github.io/onlinepay-react",
   "main": "./dist/index.cjs.js",
