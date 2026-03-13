@@ -10,6 +10,10 @@ A secure, customizable, and easy-to-use React component for accepting online pay
 - **Client-Side Encryption**: Encrypts card details ready for payment processing.
 - **Flexible Styling**: Works with Tailwind CSS out of the box, provides a fallback CSS file, and allows for deep customization.
 
+## Live Demo
+
+You can try out a live demo of the component here: [https://pymnts5.github.io/onlinepay-react/](https://pymnts5.github.io/onlinepay-react/)
+
 ## Installation
 
 ```bash
