@@ -1,5 +1,5 @@
 import OnlinePay from '../src';
-// import '../src/onlinepay.css'; // Uncomment to use the default CSS file instead of Tailwind classes
+// import 'onlinepay-react/dist/onlinepay.css'; // Uncomment to use the default CSS file instead of Tailwind classes
 import './index.css';
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
             publicKey={import.meta.env.VITE_PGP_PUBLIC_KEY}
             // The component uses Tailwind classes by default (`styling="tailwind"`).
             // To use the default CSS file, import it and set the styling prop:
-            // import '../src/onlinepay.css';
+            // import 'onlinepay-react/dist/onlinepay.css';
             styling='tailwind' // or 'css' to use default styling
           />
         </main>
