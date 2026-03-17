@@ -2,6 +2,7 @@
   "name": "onlinepay-react",
   "version": "0.0.1",
   "private": false,
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "rollup -c",

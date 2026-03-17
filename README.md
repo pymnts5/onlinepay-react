@@ -14,6 +14,8 @@ A secure, customisable, and easy-to-use [React](https://react.dev/) component fo
 
 You can try out a live demo of the component here: [https://pymnts5.github.io/onlinepay-react/](https://pymnts5.github.io/onlinepay-react/)
 
+![onlinepay-react demo](assets/demo.gif)
+
 ## Installation
 
 ```bash
