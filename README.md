@@ -1,6 +1,6 @@
 # onlinepay-react
 
-A secure, customisable, and easy-to-use React component for accepting online payments. It handles input formatting, validation and encryption ready for payment processing.
+A secure, customisable, and easy-to-use [React](https://react.dev/) component for accepting [Westpac OnlinePay](https://merchants.westpac.com.au/onlinepay/docs/getting-started) payments. This [React](https://react.dev/) component handles input formatting, validation and encryption ready for payment processing.
 
 ## Features
 
