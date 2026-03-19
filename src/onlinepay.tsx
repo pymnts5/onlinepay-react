@@ -24,6 +24,8 @@ interface OnlinePayProps {
   payButtonLabel?: string;
   classes?: OnlinePayClasses;
   styling?: 'tailwind' | 'css';
+  amexCvvTooltipText?: string;
+  defaultCvvTooltipText?: string;
 }
 
 const brandLogos: { [key: string]: string } = {
@@ -46,6 +48,8 @@ const OnlinePay = ({
   payButtonLabel = 'Pay Now',
   classes = {},
   styling = 'tailwind',
+  amexCvvTooltipText = 'The 4-digit code on the front of your card.',
+  defaultCvvTooltipText = 'The 3-digit code on the back of your card.',
 }: OnlinePayProps) => {
   const [hasError, setHasError] = useState(true);
   const [cardError, setCardError] = useState(true);
@@ -366,6 +370,7 @@ const OnlinePay = ({
             <div className={mergedClasses.tooltipWrapper}>
               <button
                 type='button'
+                aria-label='Show CVV information'
                 className={mergedClasses.tooltipButton}
                 onMouseEnter={() => setShowCvvTooltip(true)}
                 onMouseLeave={() => setShowCvvTooltip(false)}
@@ -387,8 +392,8 @@ const OnlinePay = ({
               {showCvvTooltip && (
                 <div className={mergedClasses.tooltipPopover}>
                   {cardBrand === 'amex'
-                    ? 'The 4-digit code on the front of your card.'
-                    : 'The 3-digit code on the back of your card.'}
+                    ? amexCvvTooltipText
+                    : defaultCvvTooltipText}
                   <div className={mergedClasses.tooltipArrow}></div>
                 </div>
               )}

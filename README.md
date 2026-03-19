@@ -89,20 +89,22 @@ function MyCheckoutPage() {
 
 ## Props
 
-| Prop                | Type                                | Description                                                             | Default                 |
-| ------------------- | ----------------------------------- | ----------------------------------------------------------------------- | ----------------------- |
-| `onSubmitPayment`   | `(encryptedCard: string) => void`   | **Required.** Callback function when payment is submitted successfully. | -                       |
-| `publicKey`         | `string`                            | **Required.** Base64 encoded public key for encryption.                 | -                       |
-| `onError`           | `(args: { field: string }) => void` | **Required.** Callback for validation errors as the user types.         | -                       |
-| `onEncryptError`    | `(error: Error) => void`            | Optional callback for errors during the encryption process.             | -                       |
-| `onCardBrandChange` | `(brand: string) => void`           | Optional callback that fires when the card brand is detected.           | -                       |
-| `styling`           | `'tailwind' \| 'css'`               | Sets the styling mode. Use `'css'` for the default stylesheet.          | `'tailwind'`            |
-| `headingText`       | `string`                            | Text for the main heading of the form.                                  | `'Credit Card Payment'` |
-| `cardLabel`         | `string`                            | Label for the card number input.                                        | `'Card Number'`         |
-| `expiryLabel`       | `string`                            | Label for the expiry date input.                                        | `'Expiry Date (MM/YY)'` |
-| `cvvLabel`          | `string`                            | Label for the CVV input.                                                | `'CVV'`                 |
-| `payButtonLabel`    | `string`                            | Text for the submit button.                                             | `'Pay Now'`             |
-| `classes`           | `OnlinePayClasses`                  | An object to override default classes for deep customisation.           | `{}`                    |
+| Prop                    | Type                                | Description                                                             | Default                                         |
+| ----------------------- | ----------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------- |
+| `onSubmitPayment`       | `(encryptedCard: string) => void`   | **Required.** Callback function when payment is submitted successfully. | -                                               |
+| `publicKey`             | `string`                            | **Required.** Base64 encoded public key for encryption.                 | -                                               |
+| `onError`               | `(args: { field: string }) => void` | **Required.** Callback for validation errors as the user types.         | -                                               |
+| `onEncryptError`        | `(error: Error) => void`            | Optional callback for errors during the encryption process.             | -                                               |
+| `onCardBrandChange`     | `(brand: string) => void`           | Optional callback that fires when the card brand is detected.           | -                                               |
+| `styling`               | `'tailwind' \| 'css'`               | Sets the styling mode. Use `'css'` for the default stylesheet.          | `'tailwind'`                                    |
+| `headingText`           | `string`                            | Text for the main heading of the form.                                  | `'Credit Card Payment'`                         |
+| `cardLabel`             | `string`                            | Label for the card number input.                                        | `'Card Number'`                                 |
+| `expiryLabel`           | `string`                            | Label for the expiry date input.                                        | `'Expiry Date (MM/YY)'`                         |
+| `cvvLabel`              | `string`                            | Label for the CVV input.                                                | `'CVV'`                                         |
+| `payButtonLabel`        | `string`                            | Text for the submit button.                                             | `'Pay Now'`                                     |
+| `amexCvvTooltipText`    | `string`                            | Tooltip text for the CVV help icon when an Amex card is detected.       | `'The 4-digit code on the front of your card.'` |
+| `defaultCvvTooltipText` | `string`                            | Tooltip text for the CVV help icon for non-Amex cards.                  | `'The 3-digit code on the back of your card.'`  |
+| `classes`               | `OnlinePayClasses`                  | An object to override default classes for deep customisation.           | `{}`                                            |
 
 ## Advanced Customisation
 
