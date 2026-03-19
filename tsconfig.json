@@ -14,7 +14,9 @@
   },
   "include": [
     "src",
-    "example"
+    "example",
+    "__tests__/onlinepay.test.tsx",
+    "__tests__/setupTests.ts"
   ],
   "exclude": [
     "vite.config.ts",
