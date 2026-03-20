@@ -69,6 +69,7 @@ const OnlinePay = ({
   const [cardBrand, setCardBrand] = useState('');
   const [showCvvTooltip, setShowCvvTooltip] = useState(false);
   const [showCvv, setShowCvv] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const expiryInputRef = React.useRef<HTMLInputElement>(null);
   const cvvInputRef = React.useRef<HTMLInputElement>(null);
@@ -137,7 +138,18 @@ const OnlinePay = ({
     const brand = detectCardBrand(rawValue);
     setCardBrand(brand);
     onCardBrandChange?.(brand || '');
-    const formattedValue = rawValue.replace(/(.{4})/g, '$1 ').trim(); // insert space every 4 digits
+
+    let formattedValue = rawValue;
+    if (brand === 'amex') {
+      if (rawValue.length > 10) {
+        formattedValue = `${rawValue.slice(0, 4)} ${rawValue.slice(4, 10)} ${rawValue.slice(10)}`;
+      } else if (rawValue.length > 4) {
+        formattedValue = `${rawValue.slice(0, 4)} ${rawValue.slice(4)}`;
+      }
+    } else {
+      formattedValue = rawValue.replace(/(.{4})/g, '$1 ').trim(); // insert space every 4 digits
+    }
+
     setFormData((prev) => ({
       ...prev,
       cardNumber: formattedValue,
@@ -286,10 +298,13 @@ const OnlinePay = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsProcessing(true);
     try {
       const encryptedCard = await encryptCard();
       onSubmitPayment(encryptedCard);
+      setIsProcessing(false);
     } catch (error) {
+      setIsProcessing(false);
       if (onEncryptError) {
         onEncryptError(error as Error);
       }
@@ -514,9 +529,44 @@ const OnlinePay = ({
       <button
         type='submit'
         className={mergedClasses.button}
-        disabled={hasError}
+        disabled={hasError || isProcessing}
       >
-        {payButtonLabel}
+        {isProcessing ? (
+          <span
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem',
+            }}
+          >
+            <svg
+              className='animate-spin'
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              width='16'
+              height='16'
+            >
+              <circle
+                style={{ opacity: 0.25 }}
+                cx='12'
+                cy='12'
+                r='10'
+                stroke='currentColor'
+                strokeWidth='4'
+              ></circle>
+              <path
+                style={{ opacity: 0.75 }}
+                fill='currentColor'
+                d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+              ></path>
+            </svg>
+            Processing...
+          </span>
+        ) : (
+          payButtonLabel
+        )}
       </button>
     </form>
   );

@@ -199,4 +199,15 @@ describe('OnlinePay Component', () => {
 
     expect(expiryInput).toHaveFocus();
   });
+
+  it('formats Amex card numbers with 4-6-5 spacing', async () => {
+    const user = userEvent.setup();
+    render(<OnlinePay {...defaultProps} />);
+
+    const cardNumberInput = screen.getByLabelText('Card Number');
+
+    await user.type(cardNumberInput, '371234567890123');
+
+    expect(cardNumberInput).toHaveValue('3712 345678 90123');
+  });
 });
