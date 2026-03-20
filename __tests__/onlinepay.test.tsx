@@ -175,4 +175,28 @@ describe('OnlinePay Component', () => {
       expect(mockOnSubmitPayment).not.toHaveBeenCalled();
     });
   });
+
+  it('automatically focuses CVV field when valid expiry date is entered', async () => {
+    const user = userEvent.setup();
+    render(<OnlinePay {...defaultProps} />);
+
+    const expiryInput = screen.getByLabelText('Expiry Date (MM/YY)');
+    const cvvInput = screen.getByLabelText('CVV');
+
+    await user.type(expiryInput, '12/30');
+
+    expect(cvvInput).toHaveFocus();
+  });
+
+  it('automatically focuses Expiry Date field when valid card number is entered', async () => {
+    const user = userEvent.setup();
+    render(<OnlinePay {...defaultProps} />);
+
+    const cardNumberInput = screen.getByLabelText('Card Number');
+    const expiryInput = screen.getByLabelText('Expiry Date (MM/YY)');
+
+    await user.type(cardNumberInput, '4242424242424242');
+
+    expect(expiryInput).toHaveFocus();
+  });
 });

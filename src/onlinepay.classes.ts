@@ -59,7 +59,7 @@ export const defaultClasses: OnlinePayClasses = {
   labelWrapper: 'flex items-center h-6',
   tooltipWrapper: 'relative ml-2',
   tooltipButton: 'text-gray-400 hover:text-gray-600',
-  tooltipIcon: 'h-5 w-5',
+  tooltipIcon: 'h-4 w-4',
   tooltipPopover:
     'absolute bottom-full right-0 mb-2 w-48 p-2 bg-gray-800 text-white text-xs rounded shadow-lg z-10',
   tooltipArrow:

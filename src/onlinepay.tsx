@@ -68,6 +68,19 @@ const OnlinePay = ({
   });
   const [cardBrand, setCardBrand] = useState('');
   const [showCvvTooltip, setShowCvvTooltip] = useState(false);
+  const [showCvv, setShowCvv] = useState(false);
+
+  const expiryInputRef = React.useRef<HTMLInputElement>(null);
+  const cvvInputRef = React.useRef<HTMLInputElement>(null);
+
+  // Generate unique IDs for form fields to ensure accessibility and prevent ID collisions
+  const formId = React.useId();
+  const cardFieldId = `card-number-${formId}`;
+  const cardErrorId = `card-error-${formId}`;
+  const expiryFieldId = `expiry-date-${formId}`;
+  const expiryErrorId = `expiry-error-${formId}`;
+  const cvvFieldId = `cvv-${formId}`;
+  const cvvErrorId = `cvv-error-${formId}`;
 
   const baseClasses = styling === 'css' ? semanticClasses : defaultClasses;
   const mergedClasses = { ...baseClasses, ...classes };
@@ -136,6 +149,10 @@ const OnlinePay = ({
       expiryMonth: formData.expiryMonth,
       expiryYear: formData.expiryYear,
     });
+
+    if (!validateCardNumber(rawValue, brand)) {
+      expiryInputRef.current?.focus();
+    }
   };
 
   const luhnCheck = (val: string) => {
@@ -233,6 +250,10 @@ const OnlinePay = ({
         expiryMonth: expiryMonthStr,
         expiryYear: expiryYearStr,
       });
+
+      if (!validateExpiryDate(expiryMonthStr, expiryYearStr)) {
+        cvvInputRef.current?.focus();
+      }
     } else {
       validateForm({
         cardNumber: formData.cardNumberRaw,
@@ -301,20 +322,26 @@ const OnlinePay = ({
     <form onSubmit={handleSubmit} className={mergedClasses.container}>
       <h2 className={mergedClasses.heading}>{headingText}</h2>
       <div className={mergedClasses.fieldWrapper}>
-        <label htmlFor='cardNumber' className={mergedClasses.label}>
+        <label htmlFor={cardFieldId} className={mergedClasses.label}>
           {cardLabel}
         </label>
         <div className={mergedClasses.inputWrapper}>
           <input
-            id='cardNumber'
+            id={cardFieldId}
             type='text'
             name='cardNumber'
             value={formData.cardNumber}
             onChange={handleCardChange}
             onBlur={() => setCardShowError(true)}
             required
-            maxLength={19}
+            // 19 digits + 4 spaces = 23 characters max
+            maxLength={23}
             inputMode='numeric'
+            autoComplete='cc-number'
+            aria-invalid={cardError && cardShowError}
+            aria-describedby={
+              cardError && cardShowError ? cardErrorId : undefined
+            }
             className={`${mergedClasses.input} ${
               cardError && cardShowError ? mergedClasses.inputError : ''
             }`}
@@ -328,7 +355,7 @@ const OnlinePay = ({
           )}
         </div>
         {cardError && cardShowError && (
-          <p className={mergedClasses.errorText}>
+          <p id={cardErrorId} className={mergedClasses.errorText}>
             Please enter a valid card number.
           </p>
         )}
@@ -337,12 +364,13 @@ const OnlinePay = ({
       <div className={mergedClasses.grid}>
         <div className={mergedClasses.gridChild}>
           <div className={mergedClasses.labelWrapper}>
-            <label htmlFor='expiryDate' className={mergedClasses.label}>
+            <label htmlFor={expiryFieldId} className={mergedClasses.label}>
               {expiryLabel}
             </label>
           </div>
           <input
-            id='expiryDate'
+            ref={expiryInputRef}
+            id={expiryFieldId}
             type='text'
             name='expiryDate'
             value={formData.expiryDateRaw}
@@ -351,12 +379,17 @@ const OnlinePay = ({
             required
             placeholder='MM/YY'
             inputMode='numeric'
+            autoComplete='cc-exp'
+            aria-invalid={expiryError && expiryShowError}
+            aria-describedby={
+              expiryError && expiryShowError ? expiryErrorId : undefined
+            }
             className={`${mergedClasses.input} ${
               expiryError && expiryShowError ? mergedClasses.inputError : ''
             }`}
           />
           {expiryError && expiryShowError && (
-            <p className={mergedClasses.errorText}>
+            <p id={expiryErrorId} className={mergedClasses.errorText}>
               Please enter a valid expiry date.
             </p>
           )}
@@ -364,7 +397,7 @@ const OnlinePay = ({
 
         <div className={mergedClasses.gridChild}>
           <div className={mergedClasses.labelWrapper}>
-            <label htmlFor='cvv' className={mergedClasses.label}>
+            <label htmlFor={cvvFieldId} className={mergedClasses.label}>
               {cvvLabel}
             </label>
             <div className={mergedClasses.tooltipWrapper}>
@@ -399,22 +432,81 @@ const OnlinePay = ({
               )}
             </div>
           </div>
-          <input
-            id='cvv'
-            type='password'
-            name='cvv'
-            value={formData.cvv}
-            onChange={handleCvvChange}
-            onBlur={() => setCvvShowError(true)}
-            required
-            maxLength={4}
-            inputMode='numeric'
-            className={`${mergedClasses.input} ${
-              cvvError && cvvShowError ? mergedClasses.inputError : ''
-            }`}
-          />
+          <div className={mergedClasses.inputWrapper}>
+            <input
+              ref={cvvInputRef}
+              id={cvvFieldId}
+              type={showCvv ? 'text' : 'password'}
+              name='cvv'
+              value={formData.cvv}
+              onChange={handleCvvChange}
+              onBlur={() => setCvvShowError(true)}
+              required
+              maxLength={4}
+              inputMode='numeric'
+              autoComplete='cc-csc'
+              aria-invalid={cvvError && cvvShowError}
+              aria-describedby={
+                cvvError && cvvShowError ? cvvErrorId : undefined
+              }
+              className={`${mergedClasses.input} ${
+                cvvError && cvvShowError ? mergedClasses.inputError : ''
+              }`}
+            />
+            <button
+              type='button'
+              onClick={() => setShowCvv(!showCvv)}
+              aria-label={showCvv ? 'Hide CVV' : 'Show CVV'}
+              style={{
+                position: 'absolute',
+                right: '10px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                color: '#9CA3AF',
+              }}
+            >
+              {showCvv ? (
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
+                  width='15'
+                  height='15'
+                >
+                  <path
+                    fillRule='evenodd'
+                    d='M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z'
+                    clipRule='evenodd'
+                  />
+                  <path d='M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.742L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.064 7 9.542 7 .847 0 1.669-.105 2.454-.303z' />
+                </svg>
+              ) : (
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
+                  width='15'
+                  height='15'
+                >
+                  <path d='M10 12a2 2 0 100-4 2 2 0 000 4z' />
+                  <path
+                    fillRule='evenodd'
+                    d='M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z'
+                    clipRule='evenodd'
+                  />
+                </svg>
+              )}
+            </button>
+          </div>
           {cvvError && cvvShowError && (
-            <p className={mergedClasses.errorText}>Please enter a valid CVV.</p>
+            <p id={cvvErrorId} className={mergedClasses.errorText}>
+              Please enter a valid CVV.
+            </p>
           )}
         </div>
       </div>
